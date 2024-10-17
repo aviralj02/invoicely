@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import {
   Table,
@@ -14,10 +12,15 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CirclePlus } from "lucide-react";
 import Link from "next/link";
+import { db } from "@/db";
+import { Invoices } from "@/db/schema";
+import { cn } from "@/lib/utils";
 
 type Props = {};
 
-const Dashboard = (props: Props) => {
+const Dashboard = async (props: Props) => {
+  const results = await db.select().from(Invoices);
+
   return (
     <div className="flex flex-col justify-center max-w-5xl h-full text-center gap-6 mx-auto my-12">
       <div className="flex justify-between">
@@ -41,23 +44,58 @@ const Dashboard = (props: Props) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell className="font-medium p-4 text-left">
-              <span className="font-semibold">10/31/2024</span>
-            </TableCell>
-            <TableCell className="text-left p-4">
-              <span className="font-semibold">Aviral Jain</span>
-            </TableCell>
-            <TableCell className="text-left p-4">
-              <span className="">xyz@gmail.com</span>
-            </TableCell>
-            <TableCell className="text-center p-4">
-              <Badge className="rounded-full">Paid</Badge>
-            </TableCell>
-            <TableCell className="text-right p-4">
-              <span className="font-semibold">500</span>
-            </TableCell>
-          </TableRow>
+          {results.map((row) => (
+            <TableRow key={row.id}>
+              <TableCell className="font-medium p-0 text-left">
+                <Link
+                  href={`/invoices/${row.id}`}
+                  className="block font-semibold p-4"
+                >
+                  {new Date(row.createTs).toLocaleDateString()}
+                </Link>
+              </TableCell>
+
+              <TableCell className="text-left p-0">
+                <Link
+                  href={`/invoices/${row.id}`}
+                  className="block font-semibold p-4"
+                >
+                  Aviral Jain
+                </Link>
+              </TableCell>
+
+              <TableCell className="text-left p-0">
+                <Link href={`/invoices/${row.id}`} className="block p-4">
+                  email
+                </Link>
+              </TableCell>
+
+              <TableCell className="text-center p-0">
+                <Link href={`/invoices/${row.id}`} className="block p-4">
+                  <Badge
+                    className={cn(
+                      "rounded-full select-none capitalize",
+                      row.status === "open" && "bg-blue-500",
+                      row.status === "paid" && "bg-green-600",
+                      row.status === "void" && "bg-zinc-700",
+                      row.status === "uncollectible" && "bg-red-600"
+                    )}
+                  >
+                    {row.status}
+                  </Badge>
+                </Link>
+              </TableCell>
+
+              <TableCell className="text-right p-0">
+                <Link
+                  href={`/invoices/${row.id}`}
+                  className="block font-semibold p-4"
+                >
+                  ₹{(row.value / 100).toFixed(2)}
+                </Link>
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </div>
