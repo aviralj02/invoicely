@@ -16,11 +16,20 @@ import { db } from "@/db";
 import { Invoices } from "@/db/schema";
 import { cn } from "@/lib/utils";
 import PageWrapper from "@/components/PageWrapper";
+import { auth } from "@clerk/nextjs/server";
+import { eq } from "drizzle-orm";
 
 type Props = {};
 
 const Dashboard = async (props: Props) => {
-  const results = await db.select().from(Invoices);
+  const { userId } = auth();
+
+  if (!userId) return;
+
+  const results = await db
+    .select()
+    .from(Invoices)
+    .where(eq(Invoices.userId, userId));
 
   return (
     <div className="h-full">
