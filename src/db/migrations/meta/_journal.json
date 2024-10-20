@@ -15,6 +15,27 @@
       "when": 1729359227020,
       "tag": "0001_clever_sway",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1729430056232,
+      "tag": "0002_amused_grim_reaper",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1729430330657,
+      "tag": "0003_elite_puff_adder",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1729440638468,
+      "tag": "0004_sharp_speed",
+      "breakpoints": true
     }
   ]
 }

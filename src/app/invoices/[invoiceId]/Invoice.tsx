@@ -3,7 +3,7 @@
 import PageWrapper from "@/components/PageWrapper";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Invoices } from "@/db/schema";
+import { Customers, Invoices } from "@/db/schema";
 import { cn, convertDate } from "@/lib/utils";
 import {
   DropdownMenu,
@@ -26,7 +26,9 @@ import { deleteInvoiceAction, updateStatusAction } from "@/app/actions";
 import { ChevronDown, Ellipsis, Trash2 } from "lucide-react";
 
 type Props = {
-  invoice: typeof Invoices.$inferInsert;
+  invoice: typeof Invoices.$inferInsert & {
+    customer: typeof Customers.$inferInsert;
+  };
 };
 
 const Invoice: FC<Props> = ({ invoice }: Props) => {
@@ -154,13 +156,13 @@ const Invoice: FC<Props> = ({ invoice }: Props) => {
             <strong className="block w-28 flex-shrink-0 font-medium text-sm">
               Billing Name
             </strong>
-            <span>customer name</span>
+            <span>{invoice.customer.name}</span>
           </li>
           <li className="flex gap-4">
             <strong className="block w-28 flex-shrink-0 font-medium text-sm">
               Billing Email
             </strong>
-            <span>email</span>
+            <span>{invoice.customer.email}</span>
           </li>
         </ul>
       </PageWrapper>

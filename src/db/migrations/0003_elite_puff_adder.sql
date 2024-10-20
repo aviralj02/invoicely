@@ -1,0 +1,1 @@
+ALTER TABLE "invoices" ALTER COLUMN "customerId" DROP NOT NULL;
