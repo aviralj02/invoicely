@@ -8,6 +8,7 @@ import {
 } from "@clerk/nextjs";
 import PageWrapper from "./PageWrapper";
 import Link from "next/link";
+import { Button } from "./ui/button";
 
 type Props = {};
 
@@ -30,7 +31,9 @@ const Header = (props: Props) => {
         </div>
         <div>
           <SignedOut>
-            <SignInButton />
+            <Button asChild variant="outline">
+              <Link href="/sign-in">Sign In</Link>
+            </Button>
           </SignedOut>
           <SignedIn>
             <UserButton />

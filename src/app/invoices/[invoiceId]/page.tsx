@@ -55,8 +55,6 @@ const InvoicePage = async ({ params }: Props) => {
     customer: result.customers,
   };
 
-  console.log(invoice);
-
   return <Invoice invoice={invoice} />;
 };
 
