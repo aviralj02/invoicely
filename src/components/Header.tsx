@@ -1,7 +1,6 @@
 import React from "react";
 import {
   OrganizationSwitcher,
-  SignInButton,
   SignedIn,
   SignedOut,
   UserButton,
